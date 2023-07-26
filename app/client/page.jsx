@@ -1,7 +1,12 @@
+import ClientForm from "@/components/clientForm";
 import React from "react";
 
 const Page = () => {
-  return <div className="text-xl"> client page</div>;
+  return (
+    <div>
+      <ClientForm />
+    </div>
+  );
 };
 
 export default Page;
