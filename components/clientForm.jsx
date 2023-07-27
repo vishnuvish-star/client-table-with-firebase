@@ -1,10 +1,9 @@
 "use client";
 import { useFormik } from "formik";
-import React from "react";
+import Reactfrom "react";
 import schema from "./schema/formSchema";
 import { collection, addDoc } from "firebase/firestore";
 import db from "./shared/firebaseConfig";
-import Link from "next/link";
 
 const ClientForm = () => {
   // submission
@@ -41,6 +40,7 @@ const ClientForm = () => {
           contact: Number(contact),
           // reset form
         });
+        setFields("");
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -65,7 +65,8 @@ const ClientForm = () => {
   });
   const { values, handleBlur, handleChange, errors, touched, resetForm } =
     formik;
-
+  // const [fields, setFields] = useState(formik.values);
+  // console.log(fields);
   return (
     <div className=" p-5  m-5 flex  flex-col items-center">
       <form
