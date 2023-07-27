@@ -4,6 +4,7 @@ import React from "react";
 import schema from "./schema/formSchema";
 import { collection, addDoc } from "firebase/firestore";
 import db from "./shared/firebaseConfig";
+import Link from "next/link";
 
 const ClientForm = () => {
   // submission
@@ -22,16 +23,30 @@ const ClientForm = () => {
     } = values;
 
     // console.log(values);
-    try {
-      const docRef = await addDoc(collection(db, "clients"), {
-        ...values,
-        // stored in number
-        contact: Number(contact),
-      });
-    } catch (e) {
-      console.error("Error adding document: ", e);
+    if (
+      firstName === "" ||
+      contact === "" ||
+      email === "" ||
+      dob === "" ||
+      joining === "" ||
+      employer === "" ||
+      role === ""
+    ) {
+      alert("Fields should'nt empty");
+    } else {
+      try {
+        const docRef = await addDoc(collection(db, "clients"), {
+          ...values,
+          // stored in a number
+          contact: Number(contact),
+          // reset form
+        });
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
     }
   };
+
   // formik
 
   const formik = useFormik({
@@ -48,7 +63,8 @@ const ClientForm = () => {
     onSubmit: handleOnSubmit,
     validationSchema: schema,
   });
-  const { values, handleBlur, handleChange, errors, touched } = formik;
+  const { values, handleBlur, handleChange, errors, touched, resetForm } =
+    formik;
 
   return (
     <div className=" p-5  m-5 flex  flex-col items-center">
@@ -71,11 +87,9 @@ const ClientForm = () => {
               : "outline-none p-2 rounded-md  bg-gray-50 border border-gray-100"
           }`}
         />
-        {errors.firstName && touched.firstName ? (
+        {touched.firstName && errors.firstName ? (
           <p className="text-[10px] text-red-400">{errors.firstName}</p>
-        ) : (
-          ""
-        )}
+        ) : null}
         {/* last name */}
         <label htmlFor="lastName">Last name</label>
         <input
@@ -103,11 +117,9 @@ const ClientForm = () => {
               : "outline-none p-2 rounded-md  bg-gray-50 border border-gray-100"
           }`}
         />
-        {errors.email && touched.email ? (
+        {touched.email && errors.email ? (
           <p className="text-[10px] text-red-400">{errors.email}</p>
-        ) : (
-          ""
-        )}
+        ) : null}
         {/* contact */}
         <label htmlFor="contact">Contact</label>
         <input
@@ -123,9 +135,9 @@ const ClientForm = () => {
               : "outline-none p-2 rounded-md  bg-gray-50 border border-gray-100"
           }`}
         />
-        {errors.contact && touched.contact && (
+        {touched.contact && errors.contact ? (
           <p className="text-[10px] text-red-400">{errors.contact}</p>
-        )}
+        ) : null}
         {/* date of birth */}
         <label htmlFor="dob">DOB</label>
         <input
@@ -141,11 +153,9 @@ const ClientForm = () => {
               : "outline-none p-2 rounded-md  bg-gray-50 border border-gray-100"
           }`}
         />
-        {errors.dob && touched.dob ? (
+        {touched.dob && errors.dob ? (
           <p className="text-[10px] text-red-400">{errors.dob}</p>
-        ) : (
-          ""
-        )}
+        ) : null}
         {/* employer */}
         <label htmlFor="employer">Employer</label>
         <input
@@ -161,11 +171,9 @@ const ClientForm = () => {
               : "outline-none p-2 rounded-md  bg-gray-50 border border-gray-100"
           }`}
         />
-        {errors.employer && touched.employer ? (
+        {touched.employer && errors.employer ? (
           <p className="text-[10px] text-red-400">{errors.employer}</p>
-        ) : (
-          ""
-        )}
+        ) : null}
         {/* joining */}
         <label htmlFor="joining">Joining</label>
         <input
@@ -181,11 +189,9 @@ const ClientForm = () => {
               : "outline-none p-2 rounded-md  bg-gray-50 border border-gray-100"
           }`}
         />
-        {errors.joining && touched.joining ? (
+        {touched.joining && errors.joining ? (
           <p className="text-[10px] text-red-400">{errors.joining}</p>
-        ) : (
-          ""
-        )}
+        ) : null}
         {/* Role */}
         <label htmlFor="role">Role</label>
         <input
@@ -201,11 +207,9 @@ const ClientForm = () => {
               : "outline-none p-2 rounded-md  bg-gray-50 border border-gray-100"
           }`}
         />
-        {errors.role && touched.role ? (
+        {touched.role && errors.role ? (
           <p className="text-[10px] text-red-400">{errors.role}</p>
-        ) : (
-          ""
-        )}
+        ) : null}
 
         {/* form fields end */}
 

@@ -10,9 +10,9 @@ export const TableContextProvider = ({ children }) => {
   const getData = async () => {
     const querySnapshot = await getDocs(collection(db, "clients"));
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
+      // console.log(doc.id, " => ", doc.data());
       setData((prev) => [...prev, doc.data()]);
-      console.log(data);
+      // console.log(data);
     });
   };
 

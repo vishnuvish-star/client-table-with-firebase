@@ -8,6 +8,9 @@ export default function Home() {
       <Link href={"/client"} className="text-blue-400">
         Go to Client Page
       </Link>
+      <Link href={"/table"} className="text-blue-400">
+        Go to Table Page
+      </Link>
     </div>
   );
 }
